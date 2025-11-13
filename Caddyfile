@@ -1,0 +1,11 @@
+# UI + webhooks n8n via HTTPS local
+n8n.localhost {
+	# Certificat local auto-géré par Caddy
+	tls internal
+
+	# Compression
+	encode zstd gzip
+
+	# Passerelle vers le service Docker n8n
+	reverse_proxy http://n8n:5678
+}
