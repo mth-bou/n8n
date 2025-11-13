@@ -27,7 +27,7 @@ services:
       - N8N_TRUST_PROXY=true
       - N8N_PROXY_HOPS=1
       - WEBHOOK_URL=https://n8n.localhost/
-      # Fortement recommandé : clé d’encryptage (garde-la)
+      # Fortement recommandé : clé d’encryptage
       - N8N_ENCRYPTION_KEY=${N8N_ENCRYPTION_KEY}
       - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
     volumes:
