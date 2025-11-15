@@ -12,6 +12,8 @@ services:
   n8n:
     image: n8nio/n8n:latest
     depends_on: [db]
+    ports:
+      - "5678:5678"
     environment:
       - TZ=Europe/Paris
       - GENERIC_TIMEZONE=Europe/Paris
@@ -22,11 +24,13 @@ services:
       - DB_POSTGRESDB_USER=n8n
       - DB_POSTGRESDB_PASSWORD=n8n
       # Important derrière proxy (URL publique de l'UI et des webhooks)
-      - N8N_HOST=n8n.localhost
-      - N8N_PROTOCOL=https
+      - N8N_HOST=localhost
+      - N8N_PROTOCOL=http
       - N8N_TRUST_PROXY=true
+      - N8N_PORT=5678
       - N8N_PROXY_HOPS=1
-      - WEBHOOK_URL=https://n8n.localhost/
+      - N8N_EDITOR_BASE_URL=http://localhost:5678/
+      - WEBHOOK_URL=http://localhost:5678/
       # Fortement recommandé : clé d’encryptage
       - N8N_ENCRYPTION_KEY=${N8N_ENCRYPTION_KEY}
       - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
@@ -34,20 +38,20 @@ services:
       - n8n_data:/home/node/.n8n
     restart: unless-stopped
 
-  caddy:
-    image: caddy:2-alpine
-    depends_on: [n8n]
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile:ro
-      - caddy_data:/data
-      - caddy_config:/config
-    restart: unless-stopped
+#  caddy:
+#    image: caddy:2-alpine
+#    depends_on: [n8n]
+#    ports:
+#      - "80:80"
+#      - "443:443"
+#    volumes:
+#      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+#      - caddy_data:/data
+#      - caddy_config:/config
+#    restart: unless-stopped
 
 volumes:
   n8n_data:
   n8n_pg:
-  caddy_data:
-  caddy_config:
+#  caddy_data:
+#  caddy_config:

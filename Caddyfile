@@ -1,5 +1,5 @@
 # UI + webhooks n8n via HTTPS local
-n8n.localhost {
+n8n.local {
 	# Certificat local auto-géré par Caddy
 	tls internal
 
